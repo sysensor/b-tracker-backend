@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(APIConfig.API)
+@CrossOrigin(origins = APIConfig.CROSS_ORIGIN_URL)
 public class GPSSignalAPI {
 
     public static final String APPLICATION_JSON = "application/json";
