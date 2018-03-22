@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Base64;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -27,8 +29,14 @@ public class BusOwnerDataAPITest {
     @Test
     public void busOwnerDataRepositoryShouldReturnThreeOwners() throws Exception {
 
-        this.mock.perform(get("/" + APIConfig.DATA_API_BUS_OWNER)
+        String userName = "admin";
+        String userPassword = "admin";
+        String userAuthorization = "Basic " + Base64.getEncoder().encodeToString((userName + ":" + userPassword).getBytes());
+
+
+        this.mock.perform(get(APIConfig.DATA_API_BUS_OWNER)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
+                .header("Authorization", userAuthorization)
         ).andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.bus-owner").value(IsCollectionWithSize.hasSize(3)))
                 .andExpect(jsonPath("$._embedded.bus-owner.[?(@.id==1)].name").value("Raju"))
@@ -43,10 +51,10 @@ public class BusOwnerDataAPITest {
                         "      \"id\" : 1,\n" +
                         "      \"_links\" : {\n" +
                         "        \"self\" : {\n" +
-                        "          \"href\" : \"http://data/bus-owner/1\"\n" +
+                        "          \"href\" : \"http://localhost/data/bus-owner/1\"\n" +
                         "        },\n" +
                         "        \"busOwner\" : {\n" +
-                        "          \"href\" : \"http://data/bus-owner/1\"\n" +
+                        "          \"href\" : \"http://localhost/data/bus-owner/1\"\n" +
                         "        }\n" +
                         "      }\n" +
                         "    }, {\n" +
@@ -56,10 +64,10 @@ public class BusOwnerDataAPITest {
                         "      \"id\" : 2,\n" +
                         "      \"_links\" : {\n" +
                         "        \"self\" : {\n" +
-                        "          \"href\" : \"http://data/bus-owner/2\"\n" +
+                        "          \"href\" : \"http://localhost/data/bus-owner/2\"\n" +
                         "        },\n" +
                         "        \"busOwner\" : {\n" +
-                        "          \"href\" : \"http://data/bus-owner/2\"\n" +
+                        "          \"href\" : \"http://localhost/data/bus-owner/2\"\n" +
                         "        }\n" +
                         "      }\n" +
                         "    }, {\n" +
@@ -69,20 +77,20 @@ public class BusOwnerDataAPITest {
                         "      \"id\" : 3,\n" +
                         "      \"_links\" : {\n" +
                         "        \"self\" : {\n" +
-                        "          \"href\" : \"http://data/bus-owner/3\"\n" +
+                        "          \"href\" : \"http://localhost/data/bus-owner/3\"\n" +
                         "        },\n" +
                         "        \"busOwner\" : {\n" +
-                        "          \"href\" : \"http://data/bus-owner/3\"\n" +
+                        "          \"href\" : \"http://localhost/data/bus-owner/3\"\n" +
                         "        }\n" +
                         "      }\n" +
                         "    } ]\n" +
                         "  },\n" +
                         "  \"_links\" : {\n" +
                         "    \"self\" : {\n" +
-                        "      \"href\" : \"http://data/bus-owner\"\n" +
+                        "      \"href\" : \"http://localhost/data/bus-owner\"\n" +
                         "    },\n" +
                         "    \"profile\" : {\n" +
-                        "      \"href\" : \"http://data/profile/bus-owner\"\n" +
+                        "      \"href\" : \"http://localhost/data/profile/bus-owner\"\n" +
                         "    }\n" +
                         "  }\n" +
                         "}")));
