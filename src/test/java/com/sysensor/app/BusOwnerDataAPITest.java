@@ -42,12 +42,14 @@ public class BusOwnerDataAPITest {
                 .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/4028818462642c730162642c8d040001')].name").value("Raju"))
                 .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/4028818462642c730162642c8d040001')].address").value("Colombo"))
                 .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/4028818462642c730162642c8d040001')].phone").value("0773005672"))
+                .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/4028818462642c730162642c8d040001')].username").value("raju"))
                 .andExpect(content().string(CoreMatchers.containsString("{\n" +
                         "  \"_embedded\" : {\n" +
                         "    \"bus-owner\" : [ {\n" +
                         "      \"name\" : \"Raju\",\n" +
                         "      \"address\" : \"Colombo\",\n" +
                         "      \"phone\" : \"0773005672\",\n" +
+                        "      \"username\" : \"raju\",\n" +
                         "      \"_links\" : {\n" +
                         "        \"self\" : {\n" +
                         "          \"href\" : \"http://localhost/data/bus-owner/4028818462642c730162642c8d040001\"\n" +
@@ -60,6 +62,7 @@ public class BusOwnerDataAPITest {
                         "      \"name\" : \"Bandara\",\n" +
                         "      \"address\" : \"Gall\",\n" +
                         "      \"phone\" : \"0713005675\",\n" +
+                        "      \"username\" : \"bandara\",\n" +
                         "      \"_links\" : {\n" +
                         "        \"self\" : {\n" +
                         "          \"href\" : \"http://localhost/data/bus-owner/4028818462642c730162642c8d040002\"\n" +
@@ -72,6 +75,7 @@ public class BusOwnerDataAPITest {
                         "      \"name\" : \"Selvam\",\n" +
                         "      \"address\" : \"Matara\",\n" +
                         "      \"phone\" : \"0793005675\",\n" +
+                        "      \"username\" : \"selvam\",\n" +
                         "      \"_links\" : {\n" +
                         "        \"self\" : {\n" +
                         "          \"href\" : \"http://localhost/data/bus-owner/4028818462642c730162642c8d040003\"\n" +
@@ -89,7 +93,8 @@ public class BusOwnerDataAPITest {
                         "    \"profile\" : {\n" +
                         "      \"href\" : \"http://localhost/data/profile/bus-owner\"\n" +
                         "    }\n" +
-                        "  }")));
+                        "  }\n" +
+                        "}")));
     }
 
 }
