@@ -1,13 +1,21 @@
 package com.sysensor.app.model;
 
-import javax.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public class BusOwner {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Id")
-    private long Id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "uuid")
+    private String uuid;
 
     private String name;
 
@@ -15,8 +23,12 @@ public class BusOwner {
 
     private String phone;
 
-    public long getId() {
-        return Id;
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {
@@ -41,9 +53,5 @@ public class BusOwner {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public void setId(long id) {
-        this.Id = id;
     }
 }
