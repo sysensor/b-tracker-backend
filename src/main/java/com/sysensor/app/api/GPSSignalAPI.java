@@ -1,4 +1,4 @@
-package com.sysensor.app.controller;
+package com.sysensor.app.api;
 
 import com.sysensor.app.common.APIUtility;
 import com.sysensor.app.config.APIConfig;
@@ -8,11 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(APIConfig.API)
 @CrossOrigin(origins = APIConfig.CROSS_ORIGIN_URL)
+@Transactional
 public class GPSSignalAPI {
 
     Logger LOG = LoggerFactory.getLogger(this.getClass());

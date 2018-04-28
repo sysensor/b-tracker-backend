@@ -8,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class BusOwner {
@@ -35,6 +34,21 @@ public class BusOwner {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
     private String password;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY,
+            mappedBy="busOwner"
+    )
+    private List<Bus> busList = new ArrayList<>();
+
+    public List<Bus> getBusList() {
+        return busList;
+    }
+
+    public void setBusList(List<Bus> busList) {
+        this.busList = busList;
+    }
 
     public String getUuid() {
         return uuid;

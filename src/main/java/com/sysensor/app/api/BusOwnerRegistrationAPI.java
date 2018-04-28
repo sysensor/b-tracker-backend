@@ -1,4 +1,4 @@
-package com.sysensor.app.controller;
+package com.sysensor.app.api;
 
 import com.sysensor.app.common.APIUtility;
 import com.sysensor.app.config.APIConfig;
@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(APIConfig.API)
 @CrossOrigin(origins = APIConfig.CROSS_ORIGIN_URL)
+@Transactional
 public class BusOwnerRegistrationAPI {
 
     @Autowired

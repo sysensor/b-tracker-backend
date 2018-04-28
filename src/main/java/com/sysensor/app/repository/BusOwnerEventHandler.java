@@ -19,19 +19,21 @@ public class BusOwnerEventHandler {
     @Autowired
     private BusOwnerRepo busOwnerRepo;
 
-    @HandleBeforeCreate
+   // @HandleBeforeCreate
     public void handleBusOwnerCreate(BusOwner busOwner) {
-        busOwner.setPassword(passwordEncoder.encode(busOwner.getPassword()));
+        if (busOwner.getPassword() != null) {
+            busOwner.setPassword(passwordEncoder.encode(busOwner.getPassword()));
+        }
     }
 
     @HandleBeforeSave
+    @HandleBeforeCreate
     public void handleBusOwnerUpdate(BusOwner busOwner) {
         if (busOwner.getPassword() == null || busOwner.getPassword().equals("")) {
             //keeps the last password
             Optional<BusOwner> storedUser = busOwnerRepo.findById(busOwner.getUuid());
             busOwner.setPassword(storedUser.get().getPassword());
-        }
-        else {
+        } else {
             //password change request
             busOwner.setPassword(passwordEncoder.encode(busOwner.getPassword()));
         }
