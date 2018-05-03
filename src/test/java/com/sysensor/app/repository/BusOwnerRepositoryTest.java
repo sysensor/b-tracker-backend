@@ -60,7 +60,51 @@ public class BusOwnerRepositoryTest {
 
     @Test
     @Transactional
-    public void busOwnerRecordShouldRemoveTheBusesWhenDeleted() {
+    public void busOwnerShouldBeAbleToUpdateAttributes() {
+        BusOwner busOwner = new BusOwner();
+        busOwner.setName("Damith");
+        busOwner.setAddress("Batakettara");
+        busOwner.setPhone("3456782345");
+        busOwner.setUsername("damith");
+        busOwner.setPassword("Wow");
+
+        List<Bus> buses = new ArrayList<>();
+        Bus busOne = new Bus();
+        busOne.setBusOwner(busOwner);
+        busOne.setRegistration_no("RT350");
+        buses.add(busOne);
+
+        Bus busTwo = new Bus();
+        busTwo.setBusOwner(busOwner);
+        busTwo.setRegistration_no("RT200");
+        buses.add(busTwo);
+
+        busOwner.setBusList(buses);
+        busOwnerRepo.save(busOwner);
+
+        List<BusOwner> list = busOwnerRepo.findAll();
+        Assert.assertEquals(4, list.size());
+
+        BusOwner busOwnerAfter = busOwnerRepo.getOne(busOwner.getUuid());
+        Assert.assertEquals(2, busOwnerAfter.getBusList().size());
+
+        busOwnerAfter.getBusList().remove(0);
+        busOwnerRepo.save(busOwnerAfter);
+
+        BusOwner busOwnerAfterDeleteOne = busOwnerRepo.getOne(busOwner.getUuid());
+        Assert.assertEquals(1, busOwnerAfterDeleteOne.getBusList().size());
+
+        busOwnerRepo.deleteById(busOwner.getUuid());
+
+        Optional<BusOwner> busOwnerAfterDelete = busOwnerRepo.findById(busOwner.getUuid());
+        Assert.assertFalse(busOwnerAfterDelete.isPresent());
+
+    }
+
+
+    @Test
+    @Transactional
+    public void busOwnerRecordShouldRemoveTheBusesWhenDeletedTheBusOwner() {
         BusOwner busOwner = new BusOwner();
         busOwner.setName("Dinuka");
         busOwner.setAddress("Piliyandala");
@@ -117,4 +161,44 @@ public class BusOwnerRepositoryTest {
         Optional<Bus> busAfterDeleteOptional2 = busRepo.findById(busAfter2.getUuid());
         Assert.assertFalse(busAfterDeleteOptional2.isPresent());
     }
+
+    @Test
+    @Transactional
+    public void busOwnerShouldBeAbleToDeleteTheBuses() {
+        BusOwner busOwner = new BusOwner();
+        busOwner.setName("Dinuka");
+        busOwner.setAddress("Piliyandala");
+        busOwner.setPhone("9908768963");
+        busOwner.setUsername("dinuka");
+        busOwner.setPassword("Nice");
+
+        List<Bus> buses = new ArrayList<>();
+        Bus busOne = new Bus();
+        busOne.setBusOwner(busOwner);
+        busOne.setRegistration_no("RT120");
+        buses.add(busOne);
+
+        Bus busTwo = new Bus();
+        busTwo.setBusOwner(busOwner);
+        busTwo.setRegistration_no("RT138");
+        buses.add(busTwo);
+
+        busOwner.setBusList(buses);
+        busOwnerRepo.save(busOwner);
+
+        List<BusOwner> list = busOwnerRepo.findAll();
+        Assert.assertEquals(4, list.size());
+
+        BusOwner busOwnerAfter = busOwnerRepo.getOne(busOwner.getUuid());
+        Assert.assertEquals(2, busOwnerAfter.getBusList().size());
+
+        busOwnerAfter.getBusList().remove(0);
+        busOwnerRepo.save(busOwnerAfter);
+
+        BusOwner busOwnerAfterDeleteOne = busOwnerRepo.getOne(busOwner.getUuid());
+        Assert.assertEquals(1, busOwnerAfterDeleteOne.getBusList().size());
+
+    }
+
+
 }
