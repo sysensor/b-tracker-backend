@@ -29,14 +29,13 @@ public class BusOwnerRepositoryTest {
     PasswordEncoder passwordEncoder;
 
 
-
     @Test
     @Transactional
     public void busOwnerShouldReturnTheCorrectAttributes() {
-        Optional<BusOwner> busOwnerOptional = busOwnerRepo.findById("4028818462642c730162642c8d040003");
+        Optional<BusOwner> busOwnerOptional = busOwnerRepo.findById(TestConst.BUS_OWNER_THREE_UUID);
         Assert.assertTrue(busOwnerOptional.isPresent());
         BusOwner busOwner = busOwnerOptional.get();
-        Assert.assertEquals("4028818462642c730162642c8d040003", busOwner.getUuid());
+        Assert.assertEquals(TestConst.BUS_OWNER_THREE_UUID, busOwner.getUuid());
         Assert.assertEquals("Selvam", busOwner.getName());
         Assert.assertEquals("Matara", busOwner.getAddress());
         Assert.assertEquals("0793005675", busOwner.getPhone());
@@ -44,7 +43,7 @@ public class BusOwnerRepositoryTest {
         Assert.assertEquals("$2a$10$5SM3OIksgYLL6LU8bb7Raeff2A1nwAuEsF.XoXQq6QxvJwRjh96Jq", busOwner.getPassword());
 
         Bus bus = busOwner.getBusList().get(0);
-        Assert.assertEquals("4028818462642c730162642c8d040008", bus.getUuid());
+        Assert.assertEquals(TestConst.BUS_ONE_UUID, bus.getUuid());
         Assert.assertEquals("EY3456", bus.getRegistration_no());
 
         Optional<BusOwner> busOwnerOptional2 = busOwnerRepo.findById(TestConst.BUS_OWNER_ONE_UUID);
@@ -52,11 +51,11 @@ public class BusOwnerRepositoryTest {
         BusOwner busOwner2 = busOwnerOptional2.get();
 
         Bus bus2 = busOwner2.getBusList().get(0);
-        Assert.assertEquals("4028818462642c730162642c8d040010", bus2.getUuid());
+        Assert.assertEquals(TestConst.BUS_THREE_UUID, bus2.getUuid());
         Assert.assertEquals("DR5678", bus2.getRegistration_no());
 
         Bus bus3 = busOwner2.getBusList().get(1);
-        Assert.assertEquals("4028818462642c730162642c8d040009", bus3.getUuid());
+        Assert.assertEquals(TestConst.BUS_TWO_UUID, bus3.getUuid());
         Assert.assertEquals("MK2345", bus3.getRegistration_no());
 
     }
