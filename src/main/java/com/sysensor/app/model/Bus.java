@@ -22,6 +22,10 @@ public class Bus {
     @NotNull
     private BusOwner busOwner;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bus_route_uuid")
+    private BusRoute busRoute;
+
     public String getUuid() {
         return uuid;
     }
@@ -44,5 +48,13 @@ public class Bus {
 
     public void setBusOwner(BusOwner busOwner) {
         this.busOwner = busOwner;
+    }
+
+    public BusRoute getBusRoute() {
+        return busRoute;
+    }
+
+    public void setBusRoute(BusRoute busRoute) {
+        this.busRoute = busRoute;
     }
 }

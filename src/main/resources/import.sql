@@ -3,3 +3,7 @@ insert into bus_owner(uuid, name, address, phone, username, password) values('40
 insert into bus_owner(uuid, name, address, phone, username, password) values('4028818462642c730162642c8d040003', 'Selvam', 'Matara', '0793005675','selvam','$2a$10$5SM3OIksgYLL6LU8bb7Raeff2A1nwAuEsF.XoXQq6QxvJwRjh96Jq');
 
 insert into bus(uuid, registration_no, bus_owner_uuid) values ('4028818462642c730162642c8d040008','RT120','4028818462642c730162642c8d040003')
+insert into bus(uuid, registration_no, bus_owner_uuid) values ('4028818462642c730162642c8d040009','RT130','4028818462642c730162642c8d040001')
+insert into bus(uuid, registration_no, bus_owner_uuid) values ('4028818462642c730162642c8d040010','RT400','4028818462642c730162642c8d040001')
+
+insert into bus_route(uuid, name, start, destination) values ('bf4cb437-4881-450b-b0fa-4cfe077ba547', 'RT120', 'Piliyandala', 'Colombo')
