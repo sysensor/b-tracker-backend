@@ -30,7 +30,7 @@ public class BusRepositoryTest {
 
         Bus bus = busOwnerOptional.get();
         Assert.assertEquals("4028818462642c730162642c8d040008", bus.getUuid());
-        Assert.assertEquals("RT120", bus.getRegistration_no());
+        Assert.assertEquals("EY3456", bus.getRegistration_no());
 
         BusOwner busOwner = bus.getBusOwner();
         Assert.assertEquals("4028818462642c730162642c8d040003", busOwner.getUuid());
@@ -48,7 +48,7 @@ public class BusRepositoryTest {
         Optional<BusOwner> busOwnerOptional = busOwnerRepo.findById("4028818462642c730162642c8d040003");
 
         Bus bus = new Bus();
-        bus.setRegistration_no("RT230");
+        bus.setRegistration_no("MK2347");
         bus.setBusOwner(busOwnerOptional.get());
 
         busRepo.save(bus);
@@ -57,7 +57,7 @@ public class BusRepositoryTest {
 
         Bus busAfterSave = busOptional.get();
         Assert.assertEquals(bus.getUuid(), busAfterSave.getUuid());
-        Assert.assertEquals("RT230", busAfterSave.getRegistration_no());
+        Assert.assertEquals("MK2347", busAfterSave.getRegistration_no());
 
         BusOwner busOwnerAfterSave = busAfterSave.getBusOwner();
         Assert.assertEquals("4028818462642c730162642c8d040003", busOwnerAfterSave.getUuid());

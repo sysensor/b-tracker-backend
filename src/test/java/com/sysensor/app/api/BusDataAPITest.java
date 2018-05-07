@@ -1,6 +1,7 @@
 package com.sysensor.app.api;
 
 import com.google.gson.Gson;
+import com.sysensor.app.TestConst;
 import com.sysensor.app.config.APIConfig;
 import com.sysensor.app.model.Bus;
 import org.hamcrest.collection.IsCollectionWithSize;
@@ -46,25 +47,24 @@ public class BusDataAPITest {
         ).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.bus").value(IsCollectionWithSize.hasSize(3)))
-                .andExpect(jsonPath("$._embedded.bus.[?(@._links.self.href=='http://localhost/data/bus/4028818462642c730162642c8d040008')].registration_no").value("RT120"))
-                .andExpect(jsonPath("$._embedded.bus.[?(@._links.self.href=='http://localhost/data/bus/4028818462642c730162642c8d040009')].registration_no").value("RT130"))
-                .andExpect(jsonPath("$._embedded.bus.[?(@._links.self.href=='http://localhost/data/bus/4028818462642c730162642c8d040010')].registration_no").value("RT400"));
+                .andExpect(jsonPath("$._embedded.bus.[?(@._links.self.href=='http://localhost/data/bus/4028818462642c730162642c8d040008')].registration_no").value("EY3456"))
+                .andExpect(jsonPath("$._embedded.bus.[?(@._links.self.href=='http://localhost/data/bus/4028818462642c730162642c8d040009')].registration_no").value("MK2345"))
+                .andExpect(jsonPath("$._embedded.bus.[?(@._links.self.href=='http://localhost/data/bus/4028818462642c730162642c8d040010')].registration_no").value("DR5678"));
     }
 
     @Test
     public void busDataAPIShouldCreateAndDeleteTheBus() throws Exception {
-        String busOwnerUUID = "4028818462642c730162642c8d040001";
 
         String userName = "admin";
         String userPassword = "admin";
         String userAuthorization = "Basic " + Base64.getEncoder().encodeToString((userName + ":" + userPassword).getBytes());
 
         Bus bus = new Bus();
-        bus.setRegistration_no("RT333");
+        bus.setRegistration_no("KJ5678");
 
         String busJson = JSON.toJson(bus);
         JSONObject busFinalJson = new JSONObject(busJson);
-        busFinalJson.put("busOwner", APIConfig.DATA_API_BUS_OWNER + "/" + busOwnerUUID);
+        busFinalJson.put("busOwner", APIConfig.DATA_API_BUS_OWNER + "/" + TestConst.BUS_OWNER_ONE_UUID);
 
         System.out.println("====" + busFinalJson.toString());
         List<String> selfList = new ArrayList<>();
@@ -77,7 +77,7 @@ public class BusDataAPITest {
                 .content(busFinalJson.toString())
         ).andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath(".registration_no").value("RT333"))
+                .andExpect(jsonPath(".registration_no").value("KJ5678"))
                 .andDo((result) -> {
                     JSONObject json = new JSONObject(result.getResponse().getContentAsString());
                     //Capture the returned SELF URL for the delete operation

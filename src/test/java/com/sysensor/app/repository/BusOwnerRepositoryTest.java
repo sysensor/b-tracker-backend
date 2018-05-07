@@ -1,5 +1,6 @@
 package com.sysensor.app.repository;
 
+import com.sysensor.app.TestConst;
 import com.sysensor.app.model.Bus;
 import com.sysensor.app.model.BusOwner;
 import org.junit.Assert;
@@ -27,6 +28,8 @@ public class BusOwnerRepositoryTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+
+
     @Test
     @Transactional
     public void busOwnerShouldReturnTheCorrectAttributes() {
@@ -42,19 +45,19 @@ public class BusOwnerRepositoryTest {
 
         Bus bus = busOwner.getBusList().get(0);
         Assert.assertEquals("4028818462642c730162642c8d040008", bus.getUuid());
-        Assert.assertEquals("RT120", bus.getRegistration_no());
+        Assert.assertEquals("EY3456", bus.getRegistration_no());
 
-        Optional<BusOwner> busOwnerOptional2 = busOwnerRepo.findById("4028818462642c730162642c8d040001");
+        Optional<BusOwner> busOwnerOptional2 = busOwnerRepo.findById(TestConst.BUS_OWNER_ONE_UUID);
         Assert.assertTrue(busOwnerOptional.isPresent());
         BusOwner busOwner2 = busOwnerOptional2.get();
 
         Bus bus2 = busOwner2.getBusList().get(0);
-        Assert.assertEquals("4028818462642c730162642c8d040009", bus2.getUuid());
-        Assert.assertEquals("RT130", bus2.getRegistration_no());
+        Assert.assertEquals("4028818462642c730162642c8d040010", bus2.getUuid());
+        Assert.assertEquals("DR5678", bus2.getRegistration_no());
 
         Bus bus3 = busOwner2.getBusList().get(1);
-        Assert.assertEquals("4028818462642c730162642c8d040010", bus3.getUuid());
-        Assert.assertEquals("RT400", bus3.getRegistration_no());
+        Assert.assertEquals("4028818462642c730162642c8d040009", bus3.getUuid());
+        Assert.assertEquals("MK2345", bus3.getRegistration_no());
 
     }
 
@@ -71,12 +74,12 @@ public class BusOwnerRepositoryTest {
         List<Bus> buses = new ArrayList<>();
         Bus busOne = new Bus();
         busOne.setBusOwner(busOwner);
-        busOne.setRegistration_no("RT350");
+        busOne.setRegistration_no("KR6789");
         buses.add(busOne);
 
         Bus busTwo = new Bus();
         busTwo.setBusOwner(busOwner);
-        busTwo.setRegistration_no("RT200");
+        busTwo.setRegistration_no("KH6784");
         buses.add(busTwo);
 
         busOwner.setBusList(buses);
@@ -115,12 +118,12 @@ public class BusOwnerRepositoryTest {
         List<Bus> buses = new ArrayList<>();
         Bus busOne = new Bus();
         busOne.setBusOwner(busOwner);
-        busOne.setRegistration_no("RT120");
+        busOne.setRegistration_no("KH6784");
         buses.add(busOne);
 
         Bus busTwo = new Bus();
         busTwo.setBusOwner(busOwner);
-        busTwo.setRegistration_no("RT138");
+        busTwo.setRegistration_no("HT6789");
         buses.add(busTwo);
 
         busOwner.setBusList(buses);
@@ -139,12 +142,12 @@ public class BusOwnerRepositoryTest {
 
         Bus busAfter1 = busOwnerAfter.getBusList().get(0);
         Assert.assertNotNull(busAfter1.getUuid());
-        Assert.assertEquals("RT120", busAfter1.getRegistration_no());
+        Assert.assertEquals("KH6784", busAfter1.getRegistration_no());
         Assert.assertEquals(busOwnerAfter.getUuid(), busAfter1.getBusOwner().getUuid());
 
         Bus busAfter2 = busOwnerAfter.getBusList().get(1);
         Assert.assertNotNull(busAfter2.getUuid());
-        Assert.assertEquals("RT138", busAfter2.getRegistration_no());
+        Assert.assertEquals("HT6789", busAfter2.getRegistration_no());
         Assert.assertEquals(busOwnerAfter.getUuid(), busAfter2.getBusOwner().getUuid());
 
         Bus busFromBusRepo1 = busRepo.getOne(busAfter1.getUuid());
@@ -175,12 +178,12 @@ public class BusOwnerRepositoryTest {
         List<Bus> buses = new ArrayList<>();
         Bus busOne = new Bus();
         busOne.setBusOwner(busOwner);
-        busOne.setRegistration_no("RT120");
+        busOne.setRegistration_no("HT6789");
         buses.add(busOne);
 
         Bus busTwo = new Bus();
         busTwo.setBusOwner(busOwner);
-        busTwo.setRegistration_no("RT138");
+        busTwo.setRegistration_no("JH6743");
         buses.add(busTwo);
 
         busOwner.setBusList(buses);

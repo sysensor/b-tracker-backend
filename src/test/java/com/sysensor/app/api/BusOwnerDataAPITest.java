@@ -1,6 +1,7 @@
 package com.sysensor.app.api;
 
 import com.google.gson.Gson;
+import com.sysensor.app.TestConst;
 import com.sysensor.app.config.APIConfig;
 import com.sysensor.app.model.BusOwner;
 import com.sysensor.app.repository.BusOwnerRepo;
@@ -50,11 +51,11 @@ public class BusOwnerDataAPITest {
         ).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.bus-owner").value(IsCollectionWithSize.hasSize(3)))
-                .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/4028818462642c730162642c8d040001')].name").value("Raju"))
-                .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/4028818462642c730162642c8d040001')].address").value("Colombo"))
-                .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/4028818462642c730162642c8d040001')].phone").value("0773005672"))
-                .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/4028818462642c730162642c8d040001')].username").value("raju"))
-                .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/4028818462642c730162642c8d040001')]._links.busList.href").value("http://localhost/data/bus-owner/4028818462642c730162642c8d040001/busList"));
+                .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/" + TestConst.BUS_OWNER_ONE_UUID + "')].name").value("Raju"))
+                .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/" + TestConst.BUS_OWNER_ONE_UUID + "')].address").value("Colombo"))
+                .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/" + TestConst.BUS_OWNER_ONE_UUID + "')].phone").value("0773005672"))
+                .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/" + TestConst.BUS_OWNER_ONE_UUID + "')].username").value("raju"))
+                .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/" + TestConst.BUS_OWNER_ONE_UUID + "')]._links.busList.href").value("http://localhost/data/bus-owner/" + TestConst.BUS_OWNER_ONE_UUID + "/busList"));
     }
 
     @Test
