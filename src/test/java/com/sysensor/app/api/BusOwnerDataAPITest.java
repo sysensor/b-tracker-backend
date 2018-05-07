@@ -3,6 +3,7 @@ package com.sysensor.app.api;
 import com.google.gson.Gson;
 import com.sysensor.app.config.APIConfig;
 import com.sysensor.app.model.BusOwner;
+import com.sysensor.app.repository.BusOwnerRepo;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -30,6 +31,8 @@ public class BusOwnerDataAPITest {
 
     @Autowired
     private MockMvc mock;
+    @Autowired
+    private BusOwnerRepo busOwnerRepo;
 
     Gson JSON = new Gson();
 
@@ -69,6 +72,7 @@ public class BusOwnerDataAPITest {
         busOwner.setPassword("Test123");
 
         String busOwnerJson = JSON.toJson(busOwner);
+        List<String> selfList = new ArrayList<>();
 
         this.mock.perform(post(APIConfig.DATA_API_BUS_OWNER)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -81,7 +85,18 @@ public class BusOwnerDataAPITest {
                 .andExpect(jsonPath(".address").value("Madapatha"))
                 .andExpect(jsonPath(".phone").value("7656789826"))
                 .andExpect(jsonPath(".username").value("malinda"))
-                .andExpect(jsonPath(".password").doesNotExist());
+                .andExpect(jsonPath(".password").doesNotExist())
+                .andDo((result) -> {
+                    JSONObject json = new JSONObject(result.getResponse().getContentAsString());
+                    //Capture the returned SELF URL for the delete operation
+                    selfList.add(json.getJSONObject("_links").getJSONObject("self").getString("href"));
+                });
+
+        this.mock.perform(delete(selfList.get(0))
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .header("Authorization", userAuthorization)
+        ).andDo(print())
+                .andExpect(status().isNoContent());
 
     }
 
