@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.sysensor.app.TestConst;
 import com.sysensor.app.config.APIConfig;
 import com.sysensor.app.model.Bus;
+import com.sysensor.app.model.BusRoute;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -27,85 +28,84 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BusDataAPITest {
+public class BusRouteDataAPITest {
 
     @Autowired
     private MockMvc mock;
     Gson JSON = new Gson();
 
     @Test
-    public void busDataAPIShouldReturnThreeBuses() throws Exception {
+    public void busRouteDataAPIShouldReturnTwoBusRoutes() throws Exception {
 
         String userName = "admin";
         String userPassword = "admin";
         String userAuthorization = "Basic " + Base64.getEncoder().encodeToString((userName + ":" + userPassword).getBytes());
 
 
-        this.mock.perform(get(APIConfig.DATA_API_BUS)
+        this.mock.perform(get(APIConfig.DATA_API_BUS_ROUTE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", userAuthorization)
         ).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.bus").value(IsCollectionWithSize.hasSize(3)))
-                .andExpect(jsonPath("$._embedded.bus.[?(@._links.self.href=='http://localhost/data/bus/" + TestConst.BUS_ONE_UUID + "')].registration_no").value("EY3456"))
-                .andExpect(jsonPath("$._embedded.bus.[?(@._links.self.href=='http://localhost/data/bus/" + TestConst.BUS_TWO_UUID + "')].registration_no").value("MK2345"))
-                .andExpect(jsonPath("$._embedded.bus.[?(@._links.self.href=='http://localhost/data/bus/" + TestConst.BUS_THREE_UUID + "')].registration_no").value("DR5678"));
+                .andExpect(jsonPath("$._embedded.bus-route").value(IsCollectionWithSize.hasSize(2)))
+                .andExpect(jsonPath("$._embedded.bus-route.[?(@._links.self.href=='http://localhost/data/bus-route/" + TestConst.BUS_ROUTE_ONE_UUID + "')].name").value("RT120"))
+                .andExpect(jsonPath("$._embedded.bus-route.[?(@._links.self.href=='http://localhost/data/bus-route/" + TestConst.BUS_ROUTE_TWO_UUID + "')].name").value("RT138"));
     }
 
     @Test
-    public void busDataAPIShouldCreateAndDeleteTheBus() throws Exception {
+    public void busRouteDataAPIShouldCreateAndDeleteTheBusRoutes() throws Exception {
 
         String userName = "admin";
         String userPassword = "admin";
         String userAuthorization = "Basic " + Base64.getEncoder().encodeToString((userName + ":" + userPassword).getBytes());
 
-        Bus bus = new Bus();
-        bus.setRegistration_no("KJ5678");
+        BusRoute busRoute = new BusRoute();
+        busRoute.setName("RT567");
+        busRoute.setStart("Kohuwala");
+        busRoute.setDestination("Piliyandala");
 
-        String busJson = JSON.toJson(bus);
-        JSONObject busFinalJson = new JSONObject(busJson);
-        busFinalJson.put("busOwner", APIConfig.DATA_API_BUS_OWNER + "/" + TestConst.BUS_OWNER_ONE_UUID);
+        String busRouteJson = JSON.toJson(busRoute);
 
-        System.out.println("====" + busFinalJson.toString());
+        System.out.println("====" + busRouteJson);
         List<String> selfList = new ArrayList<>();
 
-        //Create BUS
-        this.mock.perform(post(APIConfig.DATA_API_BUS)
+        //Create BusRoute
+        this.mock.perform(post(APIConfig.DATA_API_BUS_ROUTE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", userAuthorization)
-                .content(busFinalJson.toString())
+                .content(busRouteJson)
         ).andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath(".registration_no").value("KJ5678"))
+                .andExpect(jsonPath(".name").value("RT567"))
                 .andDo((result) -> {
                     JSONObject json = new JSONObject(result.getResponse().getContentAsString());
                     //Capture the returned SELF URL for the delete operation
                     selfList.add(json.getJSONObject("_links").getJSONObject("self").getString("href"));
                 });
 
-        //Check the BUS list
-        this.mock.perform(get(APIConfig.DATA_API_BUS)
+        //Check the BusRoute list
+        this.mock.perform(get(APIConfig.DATA_API_BUS_ROUTE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", userAuthorization)
         ).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.bus").value(IsCollectionWithSize.hasSize(4)));
+                .andExpect(jsonPath("$._embedded.bus-route").value(IsCollectionWithSize.hasSize(3)));
 
-        //Delete the BUS
+        //Delete the BusRoute
         this.mock.perform(delete(selfList.get(0))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", userAuthorization)
         ).andDo(print())
                 .andExpect(status().isNoContent());
 
-        //Check the BUS list
-        this.mock.perform(get(APIConfig.DATA_API_BUS)
+        //Check the BusRoute list
+        this.mock.perform(get(APIConfig.DATA_API_BUS_ROUTE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", userAuthorization)
         ).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.bus").value(IsCollectionWithSize.hasSize(3)));
+                .andExpect(jsonPath("$._embedded.bus-route").value(IsCollectionWithSize.hasSize(2)));
 
 
     }
