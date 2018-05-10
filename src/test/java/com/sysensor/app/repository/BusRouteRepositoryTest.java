@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
@@ -57,24 +59,46 @@ public class BusRouteRepositoryTest {
 
     @Test
     @Transactional
-    public void busRouteShouldBeAbleToUpdateAttributes() {
+    public void busRouteShouldBeAbleToUpdateAttributesAndDelete() {
+        //Create BusRoute
+        BusRoute busRoute = new BusRoute();
+        busRoute.setName("RT157");
+        busRoute.setStart("Madapatha");
+        busRoute.setDestination("Piliyandala");
+        busRouteRepo.save(busRoute);
 
+        String BUSROUTE_UUID = busRoute.getUuid();
+
+        //Verify after Save
+        BusRoute busRouteAfterSave = busRouteRepo.getOne(BUSROUTE_UUID);
+        Assert.assertNotNull(busRouteAfterSave);
+        Assert.assertEquals(0, busRouteAfterSave.getBusList().size());
+
+        //Add existing BUS to the route
+        List<Bus> buses = new ArrayList<>();
+        Bus busOne = busRepo.getOne(TestConst.BUS_THREE_UUID);
+        buses.add(busOne);
+
+        busRoute.setBusList(buses);
+        busRoute.setStart("Kahapola");
+        busRouteRepo.save(busRoute);
+        Assert.assertEquals(BUSROUTE_UUID, busRoute.getUuid());
+
+        //Verify after update
+        BusRoute busRouteAfterUpdate = busRouteRepo.getOne(BUSROUTE_UUID);
+        Assert.assertNotNull(busRouteAfterUpdate);
+        Assert.assertEquals("Kahapola", busRouteAfterUpdate.getStart());
+        Assert.assertEquals(1, busRouteAfterUpdate.getBusList().size());
+        Assert.assertEquals(TestConst.BUS_THREE_UUID, busRouteAfterUpdate.getBusList().get(0).getUuid());
+
+        //Delete the BusRoute
+        busRouteRepo.deleteById(BUSROUTE_UUID);
+        Optional<BusRoute> busRouteAfterDeleteOptional = busRouteRepo.findById(BUSROUTE_UUID);
+        Assert.assertFalse(busRouteAfterDeleteOptional.isPresent());
+
+        Bus busAfterDelete = busRepo.getOne(TestConst.BUS_THREE_UUID);
+        Assert.assertNotNull(busAfterDelete);
 
     }
-
-
-    @Test
-    @Transactional
-    public void busRouteRecordShouldRemoveTheBusesWhenDeletedTheBusRoute() {
-
-    }
-
-    @Test
-    @Transactional
-    public void busRouteShouldBeAbleToDeleteTheBuses() {
-
-
-    }
-
 
 }

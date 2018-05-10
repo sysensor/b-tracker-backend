@@ -28,7 +28,7 @@ public class BusRoute {
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            orphanRemoval = true, fetch = FetchType.LAZY,
+            orphanRemoval = false, fetch = FetchType.LAZY,
             mappedBy = "busRoute"
     )
     private List<Bus> busList = new ArrayList<>();
