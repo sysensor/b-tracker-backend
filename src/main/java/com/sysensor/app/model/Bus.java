@@ -1,18 +1,13 @@
 package com.sysensor.app.model;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Bus {
-
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "uuid")
-    private String uuid;
+public class Bus extends UUIDBaseEntity {
 
     @NotNull
     private String registration_no;
@@ -25,14 +20,6 @@ public class Bus {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bus_route_uuid")
     private BusRoute busRoute;
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
 
     public String getRegistration_no() {
         return registration_no;
