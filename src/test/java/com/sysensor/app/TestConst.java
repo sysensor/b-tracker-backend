@@ -12,4 +12,7 @@ public class TestConst {
 
     public static String BUS_ROUTE_ONE_UUID ="bf4cb437-4881-450b-b0fa-4cfe077ba547";
     public static String BUS_ROUTE_TWO_UUID ="bf4cb437-4881-450b-b0fa-4cfe077ba548";
+
+    public static String TICKET_ONE_UUID ="77243dc3-d162-4aa4-bcb0-6eb741173a01";
+    public static String TICKET_TWO_UUID ="77243dc3-d162-4aa4-bcb0-6eb741173a02";
 }

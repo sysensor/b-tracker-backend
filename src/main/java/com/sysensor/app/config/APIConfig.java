@@ -17,4 +17,7 @@ public class APIConfig {
     public static final String BUS_ROUTE = "bus-route";
     public static final String DATA_API_BUS_ROUTE = DATA + "/" + BUS_ROUTE;
 
+    public static final String TICKET = "ticket";
+    public static final String DATA_API_TICKET = DATA + "/" + TICKET;
+
 }

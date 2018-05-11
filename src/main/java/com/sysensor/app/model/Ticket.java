@@ -2,24 +2,25 @@ package com.sysensor.app.model;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Entity
 public class Ticket extends UUIDBaseEntity {
 
     @NotNull
-    private String price;
+    private BigDecimal price;
     @NotNull
     private String start;
     @NotNull
     private String destination;
     @NotNull
-    private String status;
+    private boolean status;
 
-    public String getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -39,11 +40,11 @@ public class Ticket extends UUIDBaseEntity {
         this.destination = destination;
     }
 
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 }

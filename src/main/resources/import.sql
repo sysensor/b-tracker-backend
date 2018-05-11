@@ -12,3 +12,6 @@ update bus set bus_route_uuid='bf4cb437-4881-450b-b0fa-4cfe077ba547' where uuid=
 insert into bus_route(uuid, name, start, destination) values ('bf4cb437-4881-450b-b0fa-4cfe077ba548', 'RT138', 'Pannipitiya', 'Colombo')
 update bus set bus_route_uuid='bf4cb437-4881-450b-b0fa-4cfe077ba548' where uuid='bf4cb437-4881-450b-b0fa-4cfe077b4009'
 update bus set bus_route_uuid='bf4cb437-4881-450b-b0fa-4cfe077ba548' where uuid='bf4cb437-4881-450b-b0fa-4cfe077b4008'
+
+insert into ticket(uuid, price, start, destination, status) values ('77243dc3-d162-4aa4-bcb0-6eb741173a01',100.25,'Piliyandala','Colombo',true)
+insert into ticket(uuid, price, start, destination, status) values ('77243dc3-d162-4aa4-bcb0-6eb741173a02',200.25,'Colombo','Nugegoda',true)
