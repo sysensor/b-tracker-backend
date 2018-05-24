@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(APIConfig.API)
-@CrossOrigin(origins = APIConfig.CROSS_ORIGIN_URL)
+@CrossOrigin(origins = {APIConfig.CROSS_ORIGIN_URL})
 @Transactional
 public class GPSSignalAPI {
 
