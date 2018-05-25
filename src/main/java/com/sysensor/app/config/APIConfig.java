@@ -20,4 +20,7 @@ public class APIConfig {
     public static final String TICKET = "ticket";
     public static final String DATA_API_TICKET = DATA + "/" + TICKET;
 
+    public static final String PASSENGER = "passenger";
+    public static final String DATA_API_PASSENGER = DATA + "/" + PASSENGER;
+
 }
