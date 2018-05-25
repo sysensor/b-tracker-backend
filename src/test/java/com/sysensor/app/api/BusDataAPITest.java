@@ -29,9 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class BusDataAPITest {
 
+    Gson JSON = new Gson();
     @Autowired
     private MockMvc mock;
-    Gson JSON = new Gson();
 
     @Test
     public void busDataAPIShouldReturnThreeBuses() throws Exception {

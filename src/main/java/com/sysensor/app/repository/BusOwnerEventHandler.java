@@ -19,7 +19,7 @@ public class BusOwnerEventHandler {
     @Autowired
     private BusOwnerRepo busOwnerRepo;
 
-   // @HandleBeforeCreate
+    // @HandleBeforeCreate
     public void handleBusOwnerCreate(BusOwner busOwner) {
         if (busOwner.getPassword() != null) {
             busOwner.setPassword(passwordEncoder.encode(busOwner.getPassword()));

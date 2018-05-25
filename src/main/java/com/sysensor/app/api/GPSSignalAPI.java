@@ -3,7 +3,6 @@ package com.sysensor.app.api;
 import com.sysensor.app.common.APIUtility;
 import com.sysensor.app.config.APIConfig;
 import com.sysensor.app.model.Location;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;

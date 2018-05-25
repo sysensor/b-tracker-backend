@@ -30,9 +30,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class TicketDataAPITest {
 
+    Gson JSON = new Gson();
     @Autowired
     private MockMvc mock;
-    Gson JSON = new Gson();
 
     @Test
     public void ticketDataAPIShouldReturnTwoTickets() throws Exception {

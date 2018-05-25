@@ -3,7 +3,6 @@ package com.sysensor.app.api;
 import com.google.gson.Gson;
 import com.sysensor.app.TestConst;
 import com.sysensor.app.config.APIConfig;
-import com.sysensor.app.model.Bus;
 import com.sysensor.app.model.BusRoute;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.json.JSONObject;
@@ -30,9 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class BusRouteDataAPITest {
 
+    Gson JSON = new Gson();
     @Autowired
     private MockMvc mock;
-    Gson JSON = new Gson();
 
     @Test
     public void busRouteDataAPIShouldReturnTwoBusRoutes() throws Exception {

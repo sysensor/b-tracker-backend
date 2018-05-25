@@ -30,12 +30,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class BusOwnerDataAPITest {
 
+    Gson JSON = new Gson();
     @Autowired
     private MockMvc mock;
     @Autowired
     private BusOwnerRepo busOwnerRepo;
-
-    Gson JSON = new Gson();
 
     @Test
     public void busOwnerDataAPIShouldReturnThreeOwners() throws Exception {

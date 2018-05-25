@@ -45,7 +45,7 @@ public class SwaggerConfig {
                 "v1",
                 "Sysensor Vehicle Tracking System",
                 new Contact("Sysensor IT Solutions", "https://medium.com/complex-to-simple", "sysensor.it@gmail.com"),
-                "License of API", "API license URL",new ArrayList<>());
+                "License of API", "API license URL", new ArrayList<>());
     }
 
 }

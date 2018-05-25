@@ -28,7 +28,7 @@ public class PassengerRegistrationAPI {
     public Passenger getPassenger(@RequestHeader HttpHeaders headers, @PathVariable String test) {
         APIUtility.printHeaders(headers, LOG);
         Optional<Passenger> passenger = passengerRepo.findById(test);
-        if(passenger.isPresent()){
+        if (passenger.isPresent()) {
             return passenger.get();
         }
 

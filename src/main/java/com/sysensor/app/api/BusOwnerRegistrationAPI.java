@@ -28,11 +28,11 @@ public class BusOwnerRegistrationAPI {
     public BusOwner getLatestSignal(@RequestHeader HttpHeaders headers, @PathVariable String test) {
         APIUtility.printHeaders(headers, LOG);
         Optional<BusOwner> busOwner = busOwnerRepo.findById(test);
-        if(busOwner.isPresent()){
+        if (busOwner.isPresent()) {
             return busOwner.get();
         }
 
-       // LOG.info("Returning the Latest Location" + busOwner.toString());
+        // LOG.info("Returning the Latest Location" + busOwner.toString());
         return null;
     }
 }
