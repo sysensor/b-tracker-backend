@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(APIConfig.API)
-@CrossOrigin(origins = APIConfig.CROSS_ORIGIN_URL)
+@CrossOrigin(origins = {APIConfig.CROSS_ORIGIN_URL})
 @Transactional
 public class BusOwnerRegistrationAPI {
 
