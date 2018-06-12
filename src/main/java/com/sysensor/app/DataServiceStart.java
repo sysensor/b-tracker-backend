@@ -6,13 +6,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BTrackerBackendAppStart {
+public class DataServiceStart {
     Logger LOG = LoggerFactory.getLogger(this.getClass());
 
 
     public static void main(String[] args) {
         //ApplicationContext context = SpringApplication.run(BTrackerBackendAppStart.class, args);
         //System.out.print(context.toString());
-        SpringApplication.run(BTrackerBackendAppStart.class, args);
+        SpringApplication.run(DataServiceStart.class, args);
     }
 }
