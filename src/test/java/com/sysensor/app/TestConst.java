@@ -6,6 +6,10 @@ public class TestConst {
     public static final String BUS_OWNER_TWO_UUID = "bf4cb437-4881-450b-b0fa-4cfe077ba542";
     public static final String BUS_OWNER_THREE_UUID = "bf4cb437-4881-450b-b0fa-4cfe077ba543";
 
+    public static final String PASSENGER_ONE_UUID = "bf4cb437-4881-450b-b0fa-4cfe077ba590";
+    public static final String PASSENGER_TWO_UUID = "bf4cb437-4881-450b-b0fa-4cfe077ba591";
+    public static final String PASSENGER_THREE_UUID = "bf4cb437-4881-450b-b0fa-4cfe077ba592";
+
     public static final String BUS_ONE_UUID = "bf4cb437-4881-450b-b0fa-4cfe077b4008";
     public static final String BUS_TWO_UUID = "bf4cb437-4881-450b-b0fa-4cfe077b4009";
     public static final String BUS_THREE_UUID = "bf4cb437-4881-450b-b0fa-4cfe077b4010";
