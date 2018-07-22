@@ -1,6 +1,7 @@
 package com.sysensor.app.repository;
 
 import com.sysensor.app.TestConst;
+import com.sysensor.app.model.Passenger;
 import com.sysensor.app.model.Ticket;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,6 +21,9 @@ import java.util.Optional;
 public class TicketRepositoryTest {
     @Autowired
     TicketRepo ticketRepo;
+
+    @Autowired
+    PassengerRepo passengerRepo;
 
     @Test
     @Transactional
@@ -48,11 +52,13 @@ public class TicketRepositoryTest {
     @Test
     @Transactional
     public void ticketShouldBeAbleToCreateUpdateAndDelete() {
+        Optional<Passenger> passenger = passengerRepo.findById(TestConst.PASSENGER_TWO_UUID);
         Ticket ticket = new Ticket();
         ticket.setStart("Madapatha");
         ticket.setDestination("Piliyandala");
         ticket.setPrice(new BigDecimal(12.50));
         ticket.setStatus(true);
+        ticket.setPassenger(passenger.get());
 
         Ticket ticketAfterSave = ticketRepo.save(ticket);
         String UUID_SAVED_TICKET = ticketAfterSave.getUuid();

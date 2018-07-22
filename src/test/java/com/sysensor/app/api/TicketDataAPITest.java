@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.sysensor.app.TestConst;
 import com.sysensor.app.config.APIConfig;
 import com.sysensor.app.model.Ticket;
+import com.sysensor.app.repository.PassengerRepo;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -33,6 +34,9 @@ public class TicketDataAPITest {
     Gson JSON = new Gson();
     @Autowired
     private MockMvc mock;
+
+    @Autowired
+    PassengerRepo passengerRepo;
 
     @Test
     public void ticketDataAPIShouldReturnTwoTickets() throws Exception {
@@ -69,6 +73,8 @@ public class TicketDataAPITest {
         ticket.setStatus(true);
 
         String ticketJson = JSON.toJson(ticket);
+        JSONObject ticketFinalJson = new JSONObject(ticketJson);
+        ticketFinalJson.put("passenger", APIConfig.DATA_API_PASSENGER + "/" + TestConst.PASSENGER_ONE_UUID);
 
         System.out.println("====" + ticketJson);
         List<String> selfList = new ArrayList<>();
@@ -78,7 +84,7 @@ public class TicketDataAPITest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", userAuthorization)
-                .content(ticketJson)
+                .content(ticketFinalJson.toString())
         ).andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath(".price").value(12.50))
