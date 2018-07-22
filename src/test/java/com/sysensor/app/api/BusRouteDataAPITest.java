@@ -43,8 +43,8 @@ public class BusRouteDataAPITest {
 
         this.mock.perform(get(APIConfig.DATA_API_BUS_ROUTE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.bus-route").value(IsCollectionWithSize.hasSize(2)))
                 .andExpect(jsonPath("$._embedded.bus-route.[?(@._links.self.href=='http://localhost/data/bus-route/" + TestConst.BUS_ROUTE_ONE_UUID + "')].name").value("RT120"))
@@ -73,8 +73,8 @@ public class BusRouteDataAPITest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", userAuthorization)
-                .content(busRouteJson)
-        ).andDo(print())
+                .content(busRouteJson))
+                .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath(".name").value("RT567"))
                 .andDo((result) -> {
@@ -86,26 +86,25 @@ public class BusRouteDataAPITest {
         //Check the BusRoute list
         this.mock.perform(get(APIConfig.DATA_API_BUS_ROUTE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.bus-route").value(IsCollectionWithSize.hasSize(3)));
 
         //Delete the BusRoute
         this.mock.perform(delete(selfList.get(0))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isNoContent());
 
         //Check the BusRoute list
         this.mock.perform(get(APIConfig.DATA_API_BUS_ROUTE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.bus-route").value(IsCollectionWithSize.hasSize(2)));
-
 
     }
 

@@ -33,10 +33,9 @@ public class TicketDataAPITest {
 
     Gson JSON = new Gson();
     @Autowired
-    private MockMvc mock;
-
-    @Autowired
     PassengerRepo passengerRepo;
+    @Autowired
+    private MockMvc mock;
 
     @Test
     public void ticketDataAPIShouldReturnTwoTickets() throws Exception {
@@ -48,8 +47,8 @@ public class TicketDataAPITest {
 
         this.mock.perform(get(APIConfig.DATA_API_TICKET)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.ticket").value(IsCollectionWithSize.hasSize(2)))
                 .andExpect(jsonPath("$._embedded.ticket.[?(@._links.self.href=='http://localhost/data/ticket/" + TestConst.TICKET_ONE_UUID + "')].price").value(100.25))
@@ -84,8 +83,8 @@ public class TicketDataAPITest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", userAuthorization)
-                .content(ticketFinalJson.toString())
-        ).andDo(print())
+                .content(ticketFinalJson.toString()))
+                .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath(".price").value(12.50))
                 .andDo((result) -> {
@@ -97,23 +96,23 @@ public class TicketDataAPITest {
         //Check the Ticket list
         this.mock.perform(get(APIConfig.DATA_API_TICKET)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.ticket").value(IsCollectionWithSize.hasSize(3)));
 
         //Delete the Ticket
         this.mock.perform(delete(selfList.get(0))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isNoContent());
 
         //Check the Ticket list
         this.mock.perform(get(APIConfig.DATA_API_TICKET)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.ticket").value(IsCollectionWithSize.hasSize(2)));
     }

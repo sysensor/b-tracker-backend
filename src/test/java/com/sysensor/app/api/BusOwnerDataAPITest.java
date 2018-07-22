@@ -46,8 +46,8 @@ public class BusOwnerDataAPITest {
 
         this.mock.perform(get(APIConfig.DATA_API_BUS_OWNER)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.bus-owner").value(IsCollectionWithSize.hasSize(3)))
                 .andExpect(jsonPath("$._embedded.bus-owner.[?(@._links.self.href=='http://localhost/data/bus-owner/" + TestConst.BUS_OWNER_ONE_UUID + "')].name").value("Raju"))
@@ -78,8 +78,8 @@ public class BusOwnerDataAPITest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", userAuthorization)
-                .content(busOwnerJson)
-        ).andDo(print())
+                .content(busOwnerJson))
+                .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath(".name").value("Malinda"))
                 .andExpect(jsonPath(".address").value("Madapatha"))
@@ -94,8 +94,8 @@ public class BusOwnerDataAPITest {
 
         this.mock.perform(delete(selfList.get(0))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isNoContent());
 
     }
@@ -121,8 +121,8 @@ public class BusOwnerDataAPITest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", userAuthorization)
-                .content(busOwnerJson)
-        ).andDo(print())
+                .content(busOwnerJson))
+                .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath(".name").value("Malinda"))
                 .andExpect(jsonPath(".address").value("Madapatha"))
@@ -140,8 +140,8 @@ public class BusOwnerDataAPITest {
         this.mock.perform(delete(selfList.get(0))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isNoContent());
 
     }

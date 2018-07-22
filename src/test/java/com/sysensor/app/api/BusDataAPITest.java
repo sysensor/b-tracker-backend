@@ -43,8 +43,8 @@ public class BusDataAPITest {
 
         this.mock.perform(get(APIConfig.DATA_API_BUS)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.bus").value(IsCollectionWithSize.hasSize(3)))
                 .andExpect(jsonPath("$._embedded.bus.[?(@._links.self.href=='http://localhost/data/bus/" + TestConst.BUS_ONE_UUID + "')].registration_no").value("EY3456"))
@@ -74,8 +74,8 @@ public class BusDataAPITest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .header("Authorization", userAuthorization)
-                .content(busFinalJson.toString())
-        ).andDo(print())
+                .content(busFinalJson.toString()))
+                .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath(".registration_no").value("KJ5678"))
                 .andDo((result) -> {
@@ -87,23 +87,23 @@ public class BusDataAPITest {
         //Check the BUS list
         this.mock.perform(get(APIConfig.DATA_API_BUS)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.bus").value(IsCollectionWithSize.hasSize(4)));
 
         //Delete the BUS
         this.mock.perform(delete(selfList.get(0))
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isNoContent());
 
         //Check the BUS list
         this.mock.perform(get(APIConfig.DATA_API_BUS)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .header("Authorization", userAuthorization)
-        ).andDo(print())
+                .header("Authorization", userAuthorization))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.bus").value(IsCollectionWithSize.hasSize(3)));
 

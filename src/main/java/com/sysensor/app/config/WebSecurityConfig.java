@@ -36,12 +36,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
-                .authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 .antMatchers(APIConfig.API + "/**").hasAnyRole(ROLE_USER, ROLE_ADMIN)
                 .antMatchers(APIConfig.DATA + "/**").hasAnyRole(ROLE_ADMIN)
                 .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.headers().frameOptions().disable();
     }
 
     @Bean
