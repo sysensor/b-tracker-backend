@@ -40,6 +40,9 @@ public class PassengerRepositoryTest {
         Passenger passenger = passengerById.get();
         Assert.assertEquals("sena", passenger.getUsername());
         Assert.assertEquals("$2a$10$5SM3OIksgYLL6LU8bb7Raeff2A1nwAuEsF.XoXQq6QxvJwRjh96Jq", passenger.getPassword());
+        Assert.assertEquals("Dayasena", passenger.getName());
+        Assert.assertEquals("no 219 sarabhoomi", passenger.getAddress());
+        Assert.assertEquals("0773676240", passenger.getPhone());
 
         Ticket ticket = passenger.getTicketList().get(0);
         Assert.assertEquals("Piliyandala", ticket.getStart());
@@ -53,6 +56,9 @@ public class PassengerRepositoryTest {
     public void PassengerShouldBeAbleToUpdateAttributes() {
         Passenger passenger = new Passenger();
         passenger.setUsername("damith");
+        passenger.setName("Damith");
+        passenger.setPhone("0702737009");
+        passenger.setAddress("219, Sarabhoomi");
         passenger.setPassword("Wow");
 
         List<Ticket> tickets = new ArrayList<>();
@@ -100,6 +106,8 @@ public class PassengerRepositoryTest {
         Passenger passenger = new Passenger();
         passenger.setUsername("kasun");
         passenger.setPassword("nice");
+        passenger.setPhone("0702737232");
+        passenger.setAddress("219, Sarabhoomi");
 
         List<Ticket> tickets = new ArrayList<>();
         Ticket ticketOne = new Ticket();

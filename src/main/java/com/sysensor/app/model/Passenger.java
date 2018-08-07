@@ -14,6 +14,12 @@ import java.util.List;
 @Entity
 public class Passenger extends UUIDBaseEntity {
 
+    private String name;
+
+    private String address;
+
+    private String phone;
+
     @NotNull
     @NotEmpty
     private String username;
@@ -51,6 +57,30 @@ public class Passenger extends UUIDBaseEntity {
 
     public void setTicketList(List<Ticket> ticketList) {
         this.ticketList = ticketList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 
