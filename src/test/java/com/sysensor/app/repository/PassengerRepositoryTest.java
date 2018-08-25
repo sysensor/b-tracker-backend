@@ -3,6 +3,7 @@ package com.sysensor.app.repository;
 import com.sysensor.app.TestConst;
 import com.sysensor.app.model.Passenger;
 import com.sysensor.app.model.Ticket;
+import com.sysensor.app.model.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,9 @@ public class PassengerRepositoryTest {
     PassengerRepo passengerRepo;
 
     @Autowired
+    UserRepo userRepo;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -38,11 +42,12 @@ public class PassengerRepositoryTest {
         Optional<Passenger> passengerById = passengerRepo.findById(TestConst.PASSENGER_ONE_UUID);
         Assert.assertTrue(passengerById.isPresent());
         Passenger passenger = passengerById.get();
-        Assert.assertEquals("sena", passenger.getUsername());
-        Assert.assertEquals("$2a$10$5SM3OIksgYLL6LU8bb7Raeff2A1nwAuEsF.XoXQq6QxvJwRjh96Jq", passenger.getPassword());
-        Assert.assertEquals("Dayasena", passenger.getName());
-        Assert.assertEquals("no 219 sarabhoomi", passenger.getAddress());
-        Assert.assertEquals("0773676240", passenger.getPhone());
+        User user = passenger.getUser();
+        Assert.assertEquals("sena", user.getUsername());
+        Assert.assertEquals("$2a$10$5SM3OIksgYLL6LU8bb7Raeff2A1nwAuEsF.XoXQq6QxvJwRjh96Jq", user.getPassword());
+        Assert.assertEquals("Sena", user.getName());
+        Assert.assertEquals("Piliyandala", user.getAddress());
+        Assert.assertEquals("0773676240", user.getPhone());
 
         Ticket ticket = passenger.getTicketList().get(0);
         Assert.assertEquals("Piliyandala", ticket.getStart());
@@ -55,11 +60,15 @@ public class PassengerRepositoryTest {
     @Transactional
     public void PassengerShouldBeAbleToUpdateAttributes() {
         Passenger passenger = new Passenger();
-        passenger.setUsername("damith");
-        passenger.setName("Damith");
-        passenger.setPhone("0702737009");
-        passenger.setAddress("219, Sarabhoomi");
-        passenger.setPassword("Wow");
+        User user = new User();
+        user.setUsername("damith");
+        user.setName("Damith");
+        user.setPhone("0702737009");
+        user.setAddress("219, Sarabhoomi");
+        user.setPassword("Wow");
+
+        user.setType("1");
+        user.setStatus(true);
 
         List<Ticket> tickets = new ArrayList<>();
         Ticket ticketOne = new Ticket();
@@ -78,6 +87,8 @@ public class PassengerRepositoryTest {
         ticketTwo.setStatus(true);
         tickets.add(ticketTwo);
 
+        userRepo.save(user);
+        passenger.setUser(user);
         passenger.setTicketList(tickets);
         passengerRepo.save(passenger);
 
@@ -104,11 +115,14 @@ public class PassengerRepositoryTest {
     @Transactional
     public void passengerRecordShouldRemoveTheTicketsWhenDeletedThePassenger() {
         Passenger passenger = new Passenger();
-        passenger.setUsername("kasun");
-        passenger.setPassword("nice");
-        passenger.setPhone("0702737232");
-        passenger.setAddress("219, Sarabhoomi");
-
+        User user = new User();
+        user.setUsername("kasun");
+        user.setPassword("nice");
+        user.setPhone("0702737232");
+        user.setAddress("219, Sarabhoomi");
+        user.setType("bus owner");
+        user.setStatus(true);
+        userRepo.save(user);
         List<Ticket> tickets = new ArrayList<>();
         Ticket ticketOne = new Ticket();
         ticketOne.setPassenger(passenger);
@@ -126,15 +140,17 @@ public class PassengerRepositoryTest {
         ticketTwo.setStatus(true);
         tickets.add(ticketTwo);
 
+        passenger.setUser(user);
         passenger.setTicketList(tickets);
         passengerRepo.save(passenger);
         List<Passenger> list = passengerRepo.findAll();
         Assert.assertEquals(4, list.size());
 
         Passenger passengerAfter = passengerRepo.getOne(passenger.getUuid());
-        Assert.assertEquals(passenger.getUuid(), passengerAfter.getUuid());
-        Assert.assertEquals("kasun", passengerAfter.getUsername());
-        Assert.assertTrue(passwordEncoder.matches(passengerAfter.getPassword(), passwordEncoder.encode("nice")));
+        User user1 = passengerAfter.getUser();
+//        Assert.assertEquals(user.getUuid(), user1.getUuid());
+        Assert.assertEquals("kasun", user1.getUsername());
+        Assert.assertTrue(passwordEncoder.matches(user1.getPassword(), passwordEncoder.encode("nice")));
 
         Ticket ticketAfter1 = passengerAfter.getTicketList().get(0);
         Assert.assertNotNull(ticketAfter1.getUuid());
@@ -142,7 +158,7 @@ public class PassengerRepositoryTest {
         Assert.assertEquals(new BigDecimal(100.25), ticketAfter1.getPrice());
         Assert.assertEquals("Piliyandala", ticketAfter1.getStart());
         Assert.assertEquals(ticketOne.getUuid(), ticketAfter1.getUuid());
-        Assert.assertEquals(passengerAfter.getUuid(), ticketAfter1.getPassenger().getUuid());
+        Assert.assertEquals(passenger.getUuid(), ticketAfter1.getPassenger().getUuid());
 
         Ticket ticketAfter2 = passengerAfter.getTicketList().get(1);
         Assert.assertNotNull(ticketAfter2.getUuid());
@@ -150,7 +166,7 @@ public class PassengerRepositoryTest {
         Assert.assertEquals(new BigDecimal(200.25), ticketAfter2.getPrice());
         Assert.assertEquals("Piliyandala", ticketAfter2.getStart());
         Assert.assertEquals(ticketTwo.getUuid(), ticketAfter2.getUuid());
-        Assert.assertEquals(passengerAfter.getUuid(), ticketAfter2.getPassenger().getUuid());
+        Assert.assertEquals(passenger.getUuid(), ticketAfter2.getPassenger().getUuid());
 
         Ticket ticketFromTicketRepo1 = ticketRepo.getOne(ticketAfter1.getUuid());
         Assert.assertNotNull(ticketFromTicketRepo1);

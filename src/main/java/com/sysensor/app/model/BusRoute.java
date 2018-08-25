@@ -28,6 +28,13 @@ public class BusRoute extends UUIDBaseEntity {
     )
     private List<Bus> busList = new ArrayList<>();
 
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = false, fetch = FetchType.LAZY,
+            mappedBy = "busRoute"
+    )
+    private List<TimeKeeper> timeKeeperList = new ArrayList<>();
+
     public String getName() {
         return name;
     }
@@ -58,5 +65,13 @@ public class BusRoute extends UUIDBaseEntity {
 
     public void setBusList(List<Bus> busList) {
         this.busList = busList;
+    }
+
+    public List<TimeKeeper> getTimeKeeperList() {
+        return timeKeeperList;
+    }
+
+    public void setTimeKeeperList(List<TimeKeeper> timeKeeperList) {
+        this.timeKeeperList = timeKeeperList;
     }
 }

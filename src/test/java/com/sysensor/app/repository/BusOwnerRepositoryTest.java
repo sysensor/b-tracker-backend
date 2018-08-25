@@ -3,6 +3,7 @@ package com.sysensor.app.repository;
 import com.sysensor.app.TestConst;
 import com.sysensor.app.model.Bus;
 import com.sysensor.app.model.BusOwner;
+import com.sysensor.app.model.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,8 @@ public class BusOwnerRepositoryTest {
     @Autowired
     BusOwnerRepo busOwnerRepo;
     @Autowired
+    UserRepo userRepo;
+    @Autowired
     BusRepo busRepo;
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -35,12 +38,13 @@ public class BusOwnerRepositoryTest {
         Optional<BusOwner> busOwnerOptional = busOwnerRepo.findById(TestConst.BUS_OWNER_THREE_UUID);
         Assert.assertTrue(busOwnerOptional.isPresent());
         BusOwner busOwner = busOwnerOptional.get();
+        User user = busOwner.getUser();
         Assert.assertEquals(TestConst.BUS_OWNER_THREE_UUID, busOwner.getUuid());
-        Assert.assertEquals("Selvam", busOwner.getName());
-        Assert.assertEquals("Matara", busOwner.getAddress());
-        Assert.assertEquals("0793005675", busOwner.getPhone());
-        Assert.assertEquals("selvam", busOwner.getUsername());
-        Assert.assertEquals("$2a$10$5SM3OIksgYLL6LU8bb7Raeff2A1nwAuEsF.XoXQq6QxvJwRjh96Jq", busOwner.getPassword());
+        Assert.assertEquals("Selvam", user.getName());
+        Assert.assertEquals("Matara", user.getAddress());
+        Assert.assertEquals("0793005675", user.getPhone());
+        Assert.assertEquals("selvam", user.getUsername());
+        Assert.assertEquals("$2a$10$5SM3OIksgYLL6LU8bb7Raeff2A1nwAuEsF.XoXQq6QxvJwRjh96Jq", user.getPassword());
 
         Bus bus = busOwner.getBusList().get(0);
         Assert.assertEquals(TestConst.BUS_ONE_UUID, bus.getUuid());
@@ -64,11 +68,16 @@ public class BusOwnerRepositoryTest {
     @Transactional
     public void busOwnerShouldBeAbleToUpdateAttributes() {
         BusOwner busOwner = new BusOwner();
-        busOwner.setName("Damith");
-        busOwner.setAddress("Batakettara");
-        busOwner.setPhone("3456782345");
-        busOwner.setUsername("damith");
-        busOwner.setPassword("Wow");
+//        User user = new User();
+//
+//        user.setName("Damith");
+//        user.setAddress("Batakettara");
+//        user.setPhone("3456782345");
+//        user.setUsername("damith2");
+//        user.setPassword("Wow");
+//        user.setType("bus owner");
+//        user.setStatus(true);
+//        user.setUuid("f4cb437-4881-450b-b0fa-4cfe077ba590");
 
         List<Bus> buses = new ArrayList<>();
         Bus busOne = new Bus();
@@ -81,7 +90,9 @@ public class BusOwnerRepositoryTest {
         busTwo.setRegistration_no("KH6784");
         buses.add(busTwo);
 
+        User user = userRepo.getOne(TestConst.USER_FIVE_UUID);
         busOwner.setBusList(buses);
+        busOwner.setUser(user);
         busOwnerRepo.save(busOwner);
 
         List<BusOwner> list = busOwnerRepo.findAll();
@@ -108,11 +119,15 @@ public class BusOwnerRepositoryTest {
     @Transactional
     public void busOwnerRecordShouldRemoveTheBusesWhenDeletedTheBusOwner() {
         BusOwner busOwner = new BusOwner();
-        busOwner.setName("Dinuka");
-        busOwner.setAddress("Piliyandala");
-        busOwner.setPhone("9908768963");
-        busOwner.setUsername("dinuka");
-        busOwner.setPassword("Nice");
+//        User user = new User();
+//
+//        user.setName("Dinuka");
+//        user.setAddress("Piliyandala");
+//        user.setPhone("9908768963");
+//        user.setUsername("dinuka1");
+//        user.setPassword("Nice");
+//        user.setType("bus owner");
+//        user.setStatus(true);
 
         List<Bus> buses = new ArrayList<>();
         Bus busOne = new Bus();
@@ -125,6 +140,9 @@ public class BusOwnerRepositoryTest {
         busTwo.setRegistration_no("HT6789");
         buses.add(busTwo);
 
+//        userRepo.save(user);
+        User user = userRepo.getOne(TestConst.USER_FOUR_UUID);
+        busOwner.setUser(user);
         busOwner.setBusList(buses);
         busOwnerRepo.save(busOwner);
 
@@ -132,12 +150,13 @@ public class BusOwnerRepositoryTest {
         Assert.assertEquals(4, list.size());
 
         BusOwner busOwnerAfter = busOwnerRepo.getOne(busOwner.getUuid());
-        Assert.assertEquals(busOwner.getUuid(), busOwnerAfter.getUuid());
-        Assert.assertEquals("Dinuka", busOwnerAfter.getName());
-        Assert.assertEquals("Piliyandala", busOwnerAfter.getAddress());
-        Assert.assertEquals("9908768963", busOwnerAfter.getPhone());
-        Assert.assertEquals("dinuka", busOwnerAfter.getUsername());
-        Assert.assertTrue(passwordEncoder.matches(busOwnerAfter.getPassword(), passwordEncoder.encode("Nice")));
+//        User userAfter=busOwnerAfter.getUser();
+//        Assert.assertEquals(user.getUuid(), userAfter.getUuid());
+//        Assert.assertEquals("Dinuka", userAfter.getName());
+//        Assert.assertEquals("Piliyandala", userAfter.getAddress());
+//        Assert.assertEquals("9908768963", userAfter.getPhone());
+//        Assert.assertEquals("dinuka1", userAfter.getUsername());
+//        Assert.assertTrue(passwordEncoder.matches(userAfter.getPassword(), passwordEncoder.encode("Nice")));
 
         Bus busAfter1 = busOwnerAfter.getBusList().get(0);
         Assert.assertNotNull(busAfter1.getUuid());
@@ -168,11 +187,15 @@ public class BusOwnerRepositoryTest {
     @Transactional
     public void busOwnerShouldBeAbleToDeleteTheBuses() {
         BusOwner busOwner = new BusOwner();
-        busOwner.setName("Dinuka");
-        busOwner.setAddress("Piliyandala");
-        busOwner.setPhone("9908768963");
-        busOwner.setUsername("dinuka");
-        busOwner.setPassword("Nice");
+//        User user = new User();
+
+//        user.setName("Dinuka");
+//        user.setAddress("Piliyandala");
+//        user.setPhone("9908768963");
+//        user.setUsername("dinuka2");
+//        user.setPassword("Nice");
+//        user.setType("bus owner");
+//        user.setStatus(true);
 
         List<Bus> buses = new ArrayList<>();
         Bus busOne = new Bus();
@@ -185,6 +208,9 @@ public class BusOwnerRepositoryTest {
         busTwo.setRegistration_no("JH6743");
         buses.add(busTwo);
 
+//        userRepo.save(user);
+        User user = userRepo.getOne(TestConst.USER_NINE_UUID);
+        busOwner.setUser(user);
         busOwner.setBusList(buses);
         busOwnerRepo.save(busOwner);
 

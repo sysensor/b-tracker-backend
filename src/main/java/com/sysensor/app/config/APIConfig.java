@@ -23,4 +23,10 @@ public class APIConfig {
     public static final String PASSENGER = "passenger";
     public static final String DATA_API_PASSENGER = DATA + "/" + PASSENGER;
 
+    public static final String USER = "user";
+    public static final String DATA_API_USER = DATA + "/" + USER;
+
+    public static final String TIME_KEEPER = "time-keeper";
+    public static final String DATA_API_TIME_KEEPER = DATA + "/" + TIME_KEEPER;
+
 }

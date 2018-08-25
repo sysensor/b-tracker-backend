@@ -3,6 +3,7 @@ package com.sysensor.app.repository;
 import com.sysensor.app.TestConst;
 import com.sysensor.app.model.Bus;
 import com.sysensor.app.model.BusOwner;
+import com.sysensor.app.model.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,12 +35,13 @@ public class BusRepositoryTest {
         Assert.assertEquals("EY3456", bus.getRegistration_no());
 
         BusOwner busOwner = bus.getBusOwner();
+        User user = busOwner.getUser();
         Assert.assertEquals(TestConst.BUS_OWNER_THREE_UUID, busOwner.getUuid());
-        Assert.assertEquals("Selvam", busOwner.getName());
-        Assert.assertEquals("Matara", busOwner.getAddress());
-        Assert.assertEquals("0793005675", busOwner.getPhone());
-        Assert.assertEquals("selvam", busOwner.getUsername());
-        Assert.assertEquals("$2a$10$5SM3OIksgYLL6LU8bb7Raeff2A1nwAuEsF.XoXQq6QxvJwRjh96Jq", busOwner.getPassword());
+        Assert.assertEquals("Selvam", user.getName());
+        Assert.assertEquals("Matara", user.getAddress());
+        Assert.assertEquals("0793005675", user.getPhone());
+        Assert.assertEquals("selvam", user.getUsername());
+        Assert.assertEquals("$2a$10$5SM3OIksgYLL6LU8bb7Raeff2A1nwAuEsF.XoXQq6QxvJwRjh96Jq", user.getPassword());
 
     }
 
@@ -61,12 +63,13 @@ public class BusRepositoryTest {
         Assert.assertEquals("MK2347", busAfterSave.getRegistration_no());
 
         BusOwner busOwnerAfterSave = busAfterSave.getBusOwner();
+        User user = busOwnerAfterSave.getUser();
         Assert.assertEquals(TestConst.BUS_OWNER_THREE_UUID, busOwnerAfterSave.getUuid());
-        Assert.assertEquals("Selvam", busOwnerAfterSave.getName());
-        Assert.assertEquals("Matara", busOwnerAfterSave.getAddress());
-        Assert.assertEquals("0793005675", busOwnerAfterSave.getPhone());
-        Assert.assertEquals("selvam", busOwnerAfterSave.getUsername());
-        Assert.assertEquals("$2a$10$5SM3OIksgYLL6LU8bb7Raeff2A1nwAuEsF.XoXQq6QxvJwRjh96Jq", busOwnerAfterSave.getPassword());
+        Assert.assertEquals("Selvam", user.getName());
+        Assert.assertEquals("Matara", user.getAddress());
+        Assert.assertEquals("0793005675", user.getPhone());
+        Assert.assertEquals("selvam", user.getUsername());
+        Assert.assertEquals("$2a$10$5SM3OIksgYLL6LU8bb7Raeff2A1nwAuEsF.XoXQq6QxvJwRjh96Jq", user.getPassword());
     }
 
 }
